@@ -91,6 +91,7 @@ const SingInButton = styled.a`
   padding: 16px 0;
   border: 1px solid transparent;
   border-radius: 5px;
+  cursor: pointer;
 
   &:hover {
     background-color: #0483ee;
