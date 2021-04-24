@@ -1,49 +1,80 @@
 import styled from "styled-components";
-import React from "react";
+import React, { useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { auth, provider } from "../firebase/firebase";
-import { selectUser } from "../store/userSlice";
-import Avatar from "@material-ui/core/Avatar";
+import { login, selectUser } from "../store/userSlice";
 
 function Header() {
   const user = useSelector(selectUser);
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  useEffect(() => {
+    auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        history.push("/home");
+      }
+    });
+  }, [user?.displayName]);
+
+  const handleAuth = () => {
+    if (!user) {
+      auth.signInWithPopup(provider).catch((error) => alert(error.message));
+    } else if (user) {
+      auth
+        .signOut()
+        .then(() => {
+          dispatch(login(null));
+          history.push("/");
+        })
+        .catch((error) => alert(error.message));
+    }
+  };
 
   return (
     <Nav>
-      <NavLogo src="./images/logo.svg" alt="" />
-      <NavMenu>
-        <a href="/home">
-          <img src="./images/home-icon.svg" alt="home" />
-          <span>HOME</span>
-        </a>
-        <a href="">
-          <img src="./images/watchlist-icon.svg" alt="watchList" />
-          <span>WATCH LIST</span>
-        </a>
-        <a href="">
-          <img src="./images/movie-icon.svg" alt="movie" />
-          <span>MOVIES</span>
-        </a>
-        <a href="">
-          <img src="./images/series-icon.svg" alt="series" />
-          <span>SERIES</span>
-        </a>
-        <a href="">
-          <img src="./images/original-icon.svg" alt="original" />
-          <span>ORIGINAL</span>
-        </a>
-        <a href="">
-          <img src="./images/search-icon.svg" alt="search" />
-          <span>SEARCH</span>
-        </a>
-      </NavMenu>
-      <LoginButton
-        onClick={() =>
-          auth.signInWithPopup(provider).catch((error) => alert(error.message))
-        }
-      >
-        LOGIN
-      </LoginButton>
+      <Link to="/">
+        <NavLogo src="./images/logo.svg" alt="" />
+      </Link>
+      {!user?.displayName ? (
+        <LoginButton onClick={handleAuth}>LOGIN</LoginButton>
+      ) : (
+        <>
+          <NavMenu>
+            <a href="/home">
+              <img src="./images/home-icon.svg" alt="home" />
+              <span>HOME</span>
+            </a>
+            <a>
+              <img src="./images/watchlist-icon.svg" alt="watchList" />
+              <span>WATCH LIST</span>
+            </a>
+            <a>
+              <img src="./images/movie-icon.svg" alt="movie" />
+              <span>MOVIES</span>
+            </a>
+            <a>
+              <img src="./images/series-icon.svg" alt="series" />
+              <span>SERIES</span>
+            </a>
+            <a>
+              <img src="./images/original-icon.svg" alt="original" />
+              <span>ORIGINAL</span>
+            </a>
+            <a>
+              <img src="./images/search-icon.svg" alt="search" />
+              <span>SEARCH</span>
+            </a>
+          </NavMenu>
+          <LogoutButton>
+            <UserImage src={user?.photo} />
+            <DropDown>
+              <span onClick={handleAuth}>Sign Out</span>
+            </DropDown>
+          </LogoutButton>
+        </>
+      )}
     </Nav>
   );
 }
@@ -59,14 +90,13 @@ const Nav = styled.nav`
   justify-content: space-between;
   background-color: #040714;
   color: #f9f9f9;
-  z-index: 1;
+  z-index: 999;
 `;
 
 const NavLogo = styled.img`
   position: relative;
   box-sizing: border-box;
   height: 60px;
-  cursor: pointer;
 `;
 
 const LoginButton = styled.a`
@@ -79,6 +109,7 @@ const LoginButton = styled.a`
   letter-spacing: 2px;
   cursor: pointer;
   margin-right: 50px;
+  cursor: pointer;
 
   &:hover {
     background-color: #f9f9f9;
@@ -97,6 +128,7 @@ const NavMenu = styled.div`
   position: relative;
   margin-left: 25px;
   margin-right: auto;
+  cursor: pointer;
 
   a {
     display: flex;
@@ -145,6 +177,45 @@ const NavMenu = styled.div`
         visibility: visible;
         opacity: 1;
       }
+    }
+  }
+`;
+
+const DropDown = styled.div`
+  position: absolute;
+  top: 50px;
+  right: 5px;
+  background: rgb(19, 19, 19);
+  border: 1px solid #f9f9f9;
+  border-radius: 4px;
+  padding: 10px;
+  letter-spacing: 3px;
+  width: 150px;
+  text-align: center;
+  cursor: pointer;
+  opacity: 0.6;
+  display: none;
+`;
+
+const UserImage = styled.img`
+  height: 100%;
+`;
+
+const LogoutButton = styled.div`
+  position: relative;
+  display: flex;
+  height: 50px;
+  width: 50px;
+
+  ${UserImage} {
+    border-radius: 50%;
+    height: 100%;
+    width: 100%;
+  }
+
+  &:hover {
+    ${DropDown} {
+      display: block;
     }
   }
 `;
