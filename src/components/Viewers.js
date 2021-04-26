@@ -7,19 +7,19 @@ function Viewers() {
     <Container>
       <Viewer>
         <img src="./images/viewers-disney.png" alt="disney" />
-        <video autoPlay={true} loop={true} playsInLine={true}>
+        <video autoPlay={true} loop={true} playsInline={true}>
           <source src="./videos/1564674844-disney.mp4" type="video/mp4" />
         </video>
       </Viewer>
       <Viewer>
         <img src="./images/viewers-marvel.png" alt="marvel" />
-        <video autoPlay={true} loop={true} playsInLine={true}>
+        <video autoPlay={true} loop={true} playsInline={true}>
           <source src="./videos/1564676115-marvel.mp4" type="video/mp4" />
         </video>
       </Viewer>
       <Viewer>
         <img src="./images/viewers-national.png" alt="national" />
-        <video autoPlay={true} loop={true} playsInLine={true}>
+        <video autoPlay={true} loop={true} playsInline={true}>
           <source
             src="./videos/1564676296-national-geographic.mp4"
             type="video/mp4"
@@ -28,13 +28,13 @@ function Viewers() {
       </Viewer>
       <Viewer>
         <img src="./images/viewers-pixar.png" alt="pixar" />
-        <video autoPlay={true} loop={true} playsInLine={true}>
+        <video autoPlay={true} loop={true} playsInline={true}>
           <source src="./videos/1564676714-pixar.mp4" type="video/mp4" />
         </video>
       </Viewer>
       <Viewer>
         <img src="./images/viewers-starwars.png" alt="starwars" />
-        <video autoPlay={true} loop={true} playsInLine={true}>
+        <video autoPlay={true} loop={true} playsInline={true}>
           <source src="./videos/1608229455-star-wars.mp4" type="video/mp4" />
         </video>
       </Viewer>
@@ -64,6 +64,7 @@ const Viewer = styled.div`
   position: relative;
   border: 2px solid rgb(255, 255, 255, 0.5);
   border-radius: 10px;
+  margin-bottom: 25px;
 
   img {
     position: absolute;
@@ -82,5 +83,11 @@ const Viewer = styled.div`
     height: 100%;
     width: 100%;
     object-fit: cover;
+  }
+
+  &:hover {
+    transition: all 0.3s ease-in-out 0s;
+    border: 2px solid rgb(255, 255, 255, 1);
+    transform: scale(1.1);
   }
 `;
