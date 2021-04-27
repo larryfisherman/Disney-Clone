@@ -70,7 +70,6 @@ const Container = styled.div`
   min-height: 100vh;
   overflow-x: hidden;
   top: 0;
-  margin: 0px 0px 0px 30px;
 `;
 
 const Background = styled.div`
@@ -93,6 +92,7 @@ const ImageTitle = styled.div`
   display: flex;
   height: 30vh;
   width: 100%;
+  margin-left: 30px;
 
   img {
     max-width: 600px;
@@ -102,6 +102,7 @@ const ImageTitle = styled.div`
 
 const Content = styled.div`
   max-width: 874px;
+  margin: 0px 0px 0px 30px;
 `;
 
 const Buttons = styled.div`
