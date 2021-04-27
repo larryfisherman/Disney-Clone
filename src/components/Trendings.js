@@ -13,7 +13,7 @@ function Trendings() {
         {trendings &&
           trendings.map((movie, key) => (
             <Image key={key}>
-              <Link to={`details` + movie.id}>
+              <Link to={`/details/` + movie.id}>
                 <img src={movie.cardImage} alt={movie.title} />
               </Link>
             </Image>

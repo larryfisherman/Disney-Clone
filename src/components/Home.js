@@ -76,7 +76,6 @@ function Home() {
     });
   }, [user?.displayName]);
 
-  console.log(recommends);
   return (
     <Container>
       <HomeSlider />

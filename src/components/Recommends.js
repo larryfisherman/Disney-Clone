@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 function Recommends() {
   const recommends = useSelector(selectRecommends);
-  console.log(recommends);
+
   return (
     <Container>
       <h4>Recommended for you</h4>
@@ -14,7 +14,7 @@ function Recommends() {
         {recommends &&
           recommends.map((movie, key) => (
             <Image key={key}>
-              <Link to={`/detail` + movie.id}>
+              <Link to={`/details/` + movie.id}>
                 <img src={movie.cardImage} alt={movie.title} />
               </Link>
             </Image>
