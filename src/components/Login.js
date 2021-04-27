@@ -9,14 +9,6 @@ import React from "react";
 function Login() {
   const user = useSelector(selectUser);
 
-  const handleClick = () => {
-    if (user?.displayName) {
-      <Link to="/home"></Link>;
-    } else {
-      auth.signInWithPopup(provider).catch((error) => alert(error.message));
-    }
-  };
-
   return (
     <Container>
       <Content>
