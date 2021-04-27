@@ -1,13 +1,42 @@
 import styled from "styled-components";
+import { useSelector } from "react-redux";
+import { selectUser } from "../store/userSlice";
+import { Link } from "react-router-dom";
+import { auth, provider } from "../firebase/firebase";
+
 import React from "react";
 
 function Login() {
+  const user = useSelector(selectUser);
+
+  const handleClick = () => {
+    if (user?.displayName) {
+      <Link to="/home"></Link>;
+    } else {
+      auth.signInWithPopup(provider).catch((error) => alert(error.message));
+    }
+  };
+
   return (
     <Container>
       <Content>
         <Logos>
           <LogoOne src="/images/cta-logo-one.svg" alt="" />
-          <SingInButton>GET ALL THERE</SingInButton>
+          {user?.displayName ? (
+            <SingInButton>
+              <Link to="/home">GET ALL THERE</Link>
+            </SingInButton>
+          ) : (
+            <SingInButton
+              onClick={() => {
+                auth
+                  .signInWithPopup(provider)
+                  .catch((error) => alert(error.message));
+              }}
+            >
+              GET ALL THERE
+            </SingInButton>
+          )}
           <Paragraph>
             Get Premier Access to Raya nad the Last Dragon for an additional fee
             with a Disney+ subscription. As of 03/26/21, the price of Disney+
