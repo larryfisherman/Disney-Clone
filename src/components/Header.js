@@ -3,42 +3,45 @@ import React, { useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { auth, provider } from "../firebase/firebase";
-import { login, selectUser } from "../store/userSlice";
+import { login, logout, selectUser } from "../store/userSlice";
+import { Avatar } from "@material-ui/core";
 
 function Header() {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
   const history = useHistory();
 
-  useEffect(() => {
-    auth.onAuthStateChanged(async (user) => {
-      if (user) {
-        history.push("/home");
-      }
-    });
-  }, [user?.displayName]);
+  // useEffect(() => {
+  //   auth.onAuthStateChanged(async (user) => {
+  //     if (user) {
+  //       history.push("/home");
+  //     }
+  //   });
+  // }, [user?.displayName]);
 
-  const handleAuth = () => {
-    if (!user) {
-      auth.signInWithPopup(provider).catch((error) => alert(error.message));
-    } else if (user) {
-      auth
-        .signOut()
-        .then(() => {
-          dispatch(login(null));
-          history.push("/");
-        })
-        .catch((error) => alert(error.message));
-    }
-  };
+  // const handleAuth = () => {
+  //   if (!user) {
+  //     auth.signInWithPopup(provider).catch((error) => alert(error.message));
+  //   } else if (user) {
+  //     auth
+  //       .signOut()
+  //       .then(() => {
+  //         dispatch(login(null));
+  //         history.push("/");
+  //       })
+  //       .catch((error) => alert(error.message));
+  //   }
+  // };
 
   return (
     <Nav>
       <Link to="/">
         <NavLogo src="./images/logo.svg" alt="" />
       </Link>
-      {!user?.displayName ? (
-        <LoginButton onClick={handleAuth}>LOGIN</LoginButton>
+      {!user.user ? (
+        <Link to="/loginPage">
+          <LoginButton>LOGIN</LoginButton>
+        </Link>
       ) : (
         <>
           <NavMenu>
@@ -68,9 +71,17 @@ function Header() {
             </a>
           </NavMenu>
           <LogoutButton>
-            <UserImage src={user?.photo} />
+            <Avatar />
             <DropDown>
-              <span onClick={handleAuth}>Sign Out</span>
+              <span
+                onClick={() => {
+                  dispatch(login(null));
+                  logout();
+                  localStorage.removeItem("token");
+                }}
+              >
+                Sign Out
+              </span>
             </DropDown>
           </LogoutButton>
         </>
@@ -206,13 +217,11 @@ const LogoutButton = styled.div`
   display: flex;
   height: 50px;
   width: 50px;
-
   ${UserImage} {
     border-radius: 50%;
     height: 100%;
     width: 100%;
   }
-
   &:hover {
     ${DropDown} {
       display: block;

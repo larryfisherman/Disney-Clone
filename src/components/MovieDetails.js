@@ -1,27 +1,23 @@
 import styled from "styled-components";
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import db from "../firebase/firebase";
+import axios from "axios";
 
 function MovieDetails() {
   const { id } = useParams();
   const [details, setDetails] = useState({});
 
   useEffect(() => {
-    db.collection("movies")
-      .doc(id)
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          setDetails(doc.data());
-        } else {
-          console.log("No doc in firebase");
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    console.log(details);
+    axios
+      .get("https://localhost:5001/api/movies/")
+      .then((response) =>
+        response.data.map((doc) => {
+          if (doc.id == id) {
+            setDetails(doc);
+          }
+        })
+      )
+      .catch((error) => console.log(error));
   }, [id]);
 
   return (

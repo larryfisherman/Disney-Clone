@@ -1,8 +1,8 @@
 import styled from "styled-components";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { selectUser } from "../store/userSlice";
 import { Link } from "react-router-dom";
-import { auth, provider } from "../firebase/firebase";
 
 import React from "react";
 
@@ -14,19 +14,13 @@ function Login() {
       <Content>
         <Logos>
           <LogoOne src="/images/cta-logo-one.svg" alt="" />
-          {user?.displayName ? (
+          {!user.user ? (
             <SingInButton>
-              <Link to="/home">GET ALL THERE</Link>
+              <Link to="/loginPage">GET ALL THERE</Link>
             </SingInButton>
           ) : (
-            <SingInButton
-              onClick={() => {
-                auth
-                  .signInWithPopup(provider)
-                  .catch((error) => alert(error.message));
-              }}
-            >
-              GET ALL THERE
+            <SingInButton>
+              <Link to="/home">GET ALL THERE</Link>
             </SingInButton>
           )}
           <Paragraph>
@@ -42,7 +36,7 @@ function Login() {
   );
 }
 
-const Container = styled.section`
+const Container = styled.section`@
   overflow: hidden;
   display: flex;
   text-align: center;

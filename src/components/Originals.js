@@ -6,6 +6,7 @@ import React from "react";
 
 function Originals() {
   const originals = useSelector(selectOriginals);
+
   return (
     <Container>
       <h4>Originals</h4>
