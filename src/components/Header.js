@@ -1,9 +1,7 @@
 import styled from "styled-components";
-import React, { useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { auth, provider } from "../firebase/firebase";
-import { login, logout, selectUser } from "../store/userSlice";
+import { logout, selectUser } from "../store/userSlice";
 import { Avatar } from "@material-ui/core";
 
 function Header() {
