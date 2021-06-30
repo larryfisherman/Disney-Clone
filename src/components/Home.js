@@ -21,59 +21,61 @@ function Home() {
   let recommends = [];
 
   useEffect(() => {
-    axios.get("https://localhost:5001/api/movies/").then((response) => {
-      response.data.map((doc) => {
-        switch (doc.type) {
-          case "new":
-            newDisney = [
-              ...newDisney,
-              {
-                id: doc.id,
-                ...doc,
-              },
-            ];
-            break;
-          case "recommend":
-            recommends = [
-              ...recommends,
-              {
-                id: doc.id,
-                ...doc,
-              },
-            ];
-            break;
-          case "trending":
-            trending = [
-              ...trending,
-              {
-                id: doc.id,
-                ...doc,
-              },
-            ];
-            break;
-          case "original":
-            original = [
-              ...original,
-              {
-                id: doc.id,
-                ...doc,
-              },
-            ];
-            break;
-          default:
-            return null;
-        }
-        dispatch(
-          setMovies({
-            recommends: recommends,
-            newDisney,
-            trending,
-            original,
-          })
-        );
+    axios
+      .get("https://disneyclone-api-app.azurewebsites.net/api/movies/")
+      .then((response) => {
+        response.data.map((doc) => {
+          switch (doc.type) {
+            case "new":
+              newDisney = [
+                ...newDisney,
+                {
+                  id: doc.id,
+                  ...doc,
+                },
+              ];
+              break;
+            case "recommend":
+              recommends = [
+                ...recommends,
+                {
+                  id: doc.id,
+                  ...doc,
+                },
+              ];
+              break;
+            case "trending":
+              trending = [
+                ...trending,
+                {
+                  id: doc.id,
+                  ...doc,
+                },
+              ];
+              break;
+            case "original":
+              original = [
+                ...original,
+                {
+                  id: doc.id,
+                  ...doc,
+                },
+              ];
+              break;
+            default:
+              return null;
+          }
+          dispatch(
+            setMovies({
+              recommends: recommends,
+              newDisney,
+              trending,
+              original,
+            })
+          );
+        });
       });
-    });
-  }, [user?.displayName]);
+  }, [user?.user]);
 
   return (
     <Container>

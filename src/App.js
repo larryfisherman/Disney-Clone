@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from "./components/Login";
 import Header from "./components/Header";
@@ -38,7 +38,6 @@ function App() {
             <RegisterPage />
           </Route>
         </Switch>
-
         <Route path="/details/:id">
           <MovieDetails />
         </Route>

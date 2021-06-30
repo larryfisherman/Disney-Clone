@@ -33,14 +33,19 @@ function LoginPage() {
         <Button
           onClick={() => {
             axios
-              .post("https://localhost:5001/api/account/login", {
-                email: userEmail,
-                password: userPassword,
-              })
+              .post(
+                "https://disneyclone-api-app.azurewebsites.net/api/account/login",
+                {
+                  email: userEmail,
+                  password: userPassword,
+                }
+              )
               .then((res) => {
-                localStorage.setItem("token", res.data);
-                dispatch(login(res.data));
-                history.push("/home");
+                if (userEmail && userPassword) {
+                  localStorage.setItem("token", res.data);
+                  dispatch(login(res.data));
+                  history.push("/home");
+                }
               });
           }}
         >

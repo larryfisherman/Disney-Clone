@@ -30,10 +30,13 @@ function LoginPage() {
         <Button
           onClick={() => {
             axios
-              .post("https://localhost:5001/api/account/register", {
-                email: userEmail,
-                password: userPassword,
-              })
+              .post(
+                "https://disneyclone-api-app.azurewebsites.net/api/account/register",
+                {
+                  email: userEmail,
+                  password: userPassword,
+                }
+              )
               .then(history.push("/loginPage"));
           }}
         >

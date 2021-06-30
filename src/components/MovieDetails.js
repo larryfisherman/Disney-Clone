@@ -9,7 +9,7 @@ function MovieDetails() {
 
   useEffect(() => {
     axios
-      .get("https://localhost:5001/api/movies/")
+      .get("https://disneyclone-api-app.azurewebsites.net/api/movies/")
       .then((response) =>
         response.data.map((doc) => {
           if (doc.id == id) {
