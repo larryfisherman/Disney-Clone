@@ -3,14 +3,13 @@ import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
-import { selectUser, login } from "../store/userSlice";
+import { selectUser } from "../store/userSlice";
 
 function LoginPage() {
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const user = useSelector(selectUser);
   const history = useHistory();
-  const dispatch = useDispatch();
 
   return (
     <Container>
@@ -19,7 +18,7 @@ function LoginPage() {
           <NavLogo src="./images/logo2.svg" alt="" />
         </Link>
 
-        <p>Log in with your email</p>
+        <p>Register with your email</p>
         <EmailInput
           placeholder="Email"
           value={userEmail}
@@ -34,27 +33,27 @@ function LoginPage() {
         <Button
           onClick={() => {
             axios
-              .post("https://localhost:5001/api/account/login", {
+              .post("https://localhost:5001/api/account/register", {
                 email: userEmail,
                 password: userPassword,
               })
-              .then((res) => {
-                localStorage.setItem("token", res.data);
-                dispatch(login(res.data));
-                history.push("/home");
-              });
+              .then(history.push("/loginPage"));
           }}
         >
           CONTINUE
         </Button>
-        <Description>
-          Log In is available to subscribers in European regions where Disney+
-          is currently available. This Log In screen is for portability access.
-        </Description>
+        <LoginDescription>
+          <Link to="/loginPage">Already have account? Sign in!</Link>
+        </LoginDescription>
       </Content>
     </Container>
   );
 }
+
+const LoginDescription = styled.p`
+  line-height: 2rem;
+  font-size: 0.6rem;
+`;
 
 const Container = styled.div`
   background-color: #1a1d29;
@@ -110,12 +109,6 @@ const Button = styled.button`
   color: white;
   font-size: 1.5rem;
   letter-spacing: 2px;
-`;
-
-const Description = styled.p`
-  margin: 2rem;
-  line-height: 2rem;
-  font-size: 0.75rem;
 `;
 
 export default LoginPage;

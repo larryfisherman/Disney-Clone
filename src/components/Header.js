@@ -9,29 +9,6 @@ import { Avatar } from "@material-ui/core";
 function Header() {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
-  const history = useHistory();
-
-  // useEffect(() => {
-  //   auth.onAuthStateChanged(async (user) => {
-  //     if (user) {
-  //       history.push("/home");
-  //     }
-  //   });
-  // }, [user?.displayName]);
-
-  // const handleAuth = () => {
-  //   if (!user) {
-  //     auth.signInWithPopup(provider).catch((error) => alert(error.message));
-  //   } else if (user) {
-  //     auth
-  //       .signOut()
-  //       .then(() => {
-  //         dispatch(login(null));
-  //         history.push("/");
-  //       })
-  //       .catch((error) => alert(error.message));
-  //   }
-  // };
 
   return (
     <Nav>
@@ -39,8 +16,8 @@ function Header() {
         <NavLogo src="./images/logo.svg" alt="" />
       </Link>
       {!user.user ? (
-        <Link to="/loginPage">
-          <LoginButton>LOGIN</LoginButton>
+        <Link to="/registerPage">
+          <LoginButton>REGISTER</LoginButton>
         </Link>
       ) : (
         <>
@@ -75,8 +52,7 @@ function Header() {
             <DropDown>
               <span
                 onClick={() => {
-                  dispatch(login(null));
-                  logout();
+                  dispatch(logout());
                   localStorage.removeItem("token");
                 }}
               >

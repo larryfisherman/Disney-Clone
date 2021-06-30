@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { useState } from "react";
 import { useSelector } from "react-redux";
 import { selectUser } from "../store/userSlice";
 import { Link } from "react-router-dom";

@@ -6,15 +6,15 @@ import Header from "./components/Header";
 import Home from "./components/Home";
 import MovieDetails from "./components/MovieDetails";
 import LoginPage from "./components/LoginPage";
+import RegisterPage from "./components/RegisterPage";
 import "./App.css";
 import { login } from "./store/userSlice";
 
 function App() {
-  const [userToken, setUserToken] = useState({});
   const dispatch = useDispatch();
+
   useEffect(() => {
     window.addEventListener("storage", () => {
-      setUserToken(localStorage.getItem("token"));
       dispatch(login("storage"));
     });
   }, [dispatch]);
@@ -33,6 +33,9 @@ function App() {
           </Route>
           <Route path="/loginPage">
             <LoginPage />
+          </Route>
+          <Route path="/registerPage">
+            <RegisterPage />
           </Route>
         </Switch>
 
